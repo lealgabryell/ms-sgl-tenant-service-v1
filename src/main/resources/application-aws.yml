@@ -4,7 +4,19 @@
 spring:
   config:
     import:
-      - "aws-secretsmanager:secret-sgl-db-credentials-v1"
+      - "optional:aws-secretsmanager:secret-sgl-db-credentials-v1"
+
+  cloud:
+    aws:
+      region:
+        static: ${AWS_REGION:us-east-2}
+      credentials:
+        instance-profile: true
+      secretsmanager:
+        enabled: true
+        region: us-east-2
+      parameterstore:
+        enabled: true
 
   datasource:
     url: jdbc:postgresql://${host}:${port}/sgl_tenant_db
@@ -23,20 +35,8 @@ spring:
   flyway:
     enabled: true
 
-  cloud:
-    aws:
-      region:
-        static: ${AWS_REGION:us-east-1}
-      credentials:
-        instance-profile: true
-      parameterstore:
-        enabled: true
-      secretsmanager:
-        enabled: true
-
 logging:
   level:
     com.sgl.tenant: INFO
     org.springframework.web: WARN
     org.hibernate.SQL: WARN
-
