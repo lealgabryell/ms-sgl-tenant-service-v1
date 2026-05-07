@@ -4,13 +4,13 @@
 spring:
   config:
     import:
-      - "aws-secretsmanager:/sgl/tenant-service/rds-credentials"
+      - "aws-secretsmanager:secret-sgl-db-credentials-v1"
       - "aws-parameterstore:/sgl/tenant-service/"
 
   datasource:
-    url: jdbc:postgresql://${rds.host}:${rds.port}/${rds.dbname}
-    username: ${rds.username}
-    password: ${rds.password}
+    url: jdbc:postgresql://${host}:${port}/sgl_tenant_db
+    username: ${username}
+    password: ${password}
     hikari:
       maximum-pool-size: 20
       minimum-idle: 5
