@@ -1,0 +1,43 @@
+# Profile AWS - As credenciais e endpoint do RDS são buscados via AWS Secrets Manager
+# O Spring Cloud AWS injeta automaticamente as propriedades do path configurado.
+
+spring:
+  config:
+    import:
+      - "aws-secretsmanager:secret-sgl-db-credentials-v1"
+      - "aws-parameterstore:/sgl/tenant-service/"
+
+  datasource:
+    url: jdbc:postgresql://${host}:${port}/sgl_tenant_db
+    username: ${username}
+    password: ${password}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    show-sql: false
+
+  flyway:
+    enabled: true
+
+  cloud:
+    aws:
+      region:
+        static: ${AWS_REGION:us-east-1}
+      credentials:
+        instance-profile: true
+      parameterstore:
+        enabled: true
+      secretsmanager:
+        enabled: true
+
+logging:
+  level:
+    com.sgl.tenant: INFO
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN
+

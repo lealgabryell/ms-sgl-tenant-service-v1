@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:17.2-alpine
+    container_name: sgl-postgres
+    environment:
+      POSTGRES_DB: sgl_tenant_db
+      POSTGRES_USER: sgl_user
+      POSTGRES_PASSWORD: sgl_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - sgl_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U sgl_user -d sgl_tenant_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sgl-tenant-service
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/sgl_tenant_db
+      SPRING_DATASOURCE_USERNAME: sgl_user
+      SPRING_DATASOURCE_PASSWORD: sgl_password
+    ports:
+      - "8080:8080"
+    restart: on-failure
+
+volumes:
+  sgl_postgres_data:
+
