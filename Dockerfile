@@ -6,7 +6,7 @@ WORKDIR /app
 RUN addgroup -S sglgroup && adduser -S sgluser -G sglgroup
 
 # Copia o JAR que o GitHub Actions baixou para a pasta target
-COPY target/*.jar app.jar
+COPY /*.jar app.jar
 
 # Garante que o usuário sgluser é dono do arquivo
 RUN chown sgluser:sglgroup app.jar
