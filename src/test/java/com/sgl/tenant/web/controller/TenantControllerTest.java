@@ -17,7 +17,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -48,13 +48,13 @@ class TenantControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    @MockitoBean
     private CreateTenantUseCase createTenantUseCase;
 
-    @MockBean
+    @MockitoBean
     private FindTenantUseCase findTenantUseCase;
 
-    @MockBean
+    @MockitoBean
     private UpdateTenantStatusUseCase updateTenantStatusUseCase;
 
     private UUID tenantId;
