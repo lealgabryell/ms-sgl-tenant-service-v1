@@ -4,24 +4,19 @@
 spring:
   config:
     import:
-      - "optional:aws-secretsmanager:secret-sgl-db-credentials-v1"
+      - "aws-secretsmanager:secret-sgl-db-credentials-v1"
 
   cloud:
     aws:
       region:
-        static: ${AWS_REGION:us-east-2}
-      credentials:
-        instance-profile: true
+        static: us-east-2
       secretsmanager:
-        enabled: true
         region: us-east-2
-      parameterstore:
-        enabled: true
 
   datasource:
-    url: jdbc:postgresql://${host}:${port}/sgl_tenant_db
-    username: ${username}
-    password: ${password}
+    url: jdbc:postgresql://${host:localhost}:${port:5432}/sgl_tenant_db
+    username: ${username:user}
+    password: ${password:pass}
     hikari:
       maximum-pool-size: 20
       minimum-idle: 5
