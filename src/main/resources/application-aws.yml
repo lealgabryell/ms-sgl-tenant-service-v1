@@ -6,23 +6,20 @@ spring:
     import:
       - "aws-secretsmanager:secret-sgl-db-credentials-v1"
 
+  datasource:
+    url: jdbc:postgresql://${host}:${port}/sgl_tenant_db
+    username: ${username}
+    password: ${password}
+    driver-class-name: org.postgresql.Driver
+
   cloud:
     aws:
       region:
         static: us-east-2
       secretsmanager:
         region: us-east-2
-
-  datasource:
-    url: jdbc:postgresql://${host:localhost}:${port:5432}/sgl_tenant_db
-    username: ${username:user}
-    password: ${password:pass}
-    hikari:
-      maximum-pool-size: 20
-      minimum-idle: 5
-      connection-timeout: 30000
-      idle-timeout: 600000
-      max-lifetime: 1800000
+      parameterstore:
+        enabled: false
 
   jpa:
     show-sql: false
