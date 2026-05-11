@@ -1,4 +1,6 @@
 server:
+  servlet:
+    context-path: /tenants
   port: 8080
 
 spring:
@@ -6,7 +8,7 @@ spring:
     name: ms-sgl-tenant-service-v1
 
   datasource:
-    url: jdbc:postgresql://sgl-db-v1.crg4kaqsg4x2.us-east-2.rds.amazonaws.com:5432/sgl_tenant_db
+    url: jdbc:postgresql://${host}:${port}/sgl_tenant_db
     username: ${sgl_user}
     password: ${sgl_password}
     driver-class-name: org.postgresql.Driver
@@ -36,7 +38,7 @@ spring:
   cloud:
     aws:
       region:
-        static: us-east-1
+        static: ${AWS_REGION:us-east-2}
       credentials:
         instance-profile: false
       parameterstore:
