@@ -1,6 +1,6 @@
 server:
   servlet:
-    context-path: /tenants
+    context-path: /
   port: 8080
 
 spring:
@@ -56,11 +56,12 @@ springdoc:
 management:
   endpoints:
     web:
+      base-path: /actuator
       exposure:
         include: health,info,metrics
   endpoint:
     health:
-      show-details: when-authorized
+      show-details: always
 
 logging:
   level:
